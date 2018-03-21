@@ -1,0 +1,371 @@
+<!doctype html>
+<head>
+	<title>Front-End Developer Exercise</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+body
+{
+	margin: 0;
+	padding: 0;
+	background-color: #bbbfc2;
+}
+
+#container
+{
+	margin: 0 auto;
+	width: 1010px;
+}
+#content
+{
+	display: inline-block;
+	float: left;
+	width: 980px;
+	min-height: 724px;
+	background-color: #fff;
+}
+#shadow_left
+{
+	background-image: url("assets/images/shadow_left.jpg");
+	background-repeat: no-repeat;
+	width: 15px;
+	min-height: 724px;
+	display: inline-block;
+	float: left;
+	background-position: top left;
+}
+#shadow_right
+{
+	background-image: url("assets/images/shadow_right.jpg");
+	background-repeat: no-repeat;
+	width: 15px;
+	min-height: 724px;
+	display: inline-block;
+	float: left;
+	background-position: top left;
+}
+#shadow_bottom
+{
+	background-image: url("assets/images/shadow_bottom.jpg");
+	background-repeat: repeat-x;
+	width: 980px;
+	min-height: 30px;
+	background-position: top left;
+}
+div.clearer
+{
+	clear: both;
+}
+
+.bs_content
+{
+	display: none;
+}
+
+#banner
+{
+	background-image: url("assets/images/header.jpg");
+	background-repeat: no-repeat;
+	height: 276px;
+	width: 980px;
+	margin-bottom: 60px;
+}
+#banner_text
+{
+	margin-right: 70px;
+	padding-top: 50px;
+	text-align: right;
+	font-family: Open Sans, Helvetica, Sans-Serif;
+	font-weight: normal;
+	font-size: 32px;
+	color: #fff;
+}
+#banner_text div.headline
+{
+	font-weight: bold;
+	font-size: 50px;
+	line-height: 48px;
+	margin-top: 15px;
+	text-transform: uppercase;
+}
+
+nav
+{
+	display: inline;
+	float: left;
+	width: 300px;
+	background-color: #ebeced;
+	background: linear-gradient(to right, #ebeced 286px, #d1d5d6);
+}
+
+ul#nav_baby_steps
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul#nav_baby_steps li
+{
+	height: 60px;
+	width: 100%;
+	border-bottom: 1px #fff solid;
+	line-height: 60px;
+}
+
+ul#nav_baby_steps li div
+{
+	margin: auto 0;
+}
+
+ul#nav_baby_steps li div.nav_label
+{
+	display: inline;
+	float: right;
+	width: 170px;
+	height: 60px;
+	text-align: right;
+	margin-right: 30px;
+	color: #9ba0a4;
+	font-family: 'Source Sans Pro', Arial, Sans-Serif;
+	font-size: 18px;
+	font-weight: normal;
+}
+ul#nav_baby_steps .bs_link
+{
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+ul#nav_baby_steps li div.nav_icon
+{
+	display: inline;
+	float: right;
+	width: 30px;
+	height: 60px;
+	margin-right: 24px;
+}
+ul#nav_baby_steps li div.nav_icon img
+{
+	width: 30px;
+	height: 25px;
+	border: 0;
+	margin-top: 17px;
+}
+
+ul#nav_baby_steps li.selected
+{
+	background-color: #fff;
+}
+ul#nav_baby_steps .bs_link.selected
+{
+	color: #36abe1;
+}
+
+
+main
+{
+	display: inline;
+	float: left;
+	width: 535px;
+	margin-left: 70px;
+	padding-right: 70px;
+}
+.main_heading
+{
+	width: 436px;
+	height: 65px;
+	border: 0;
+	display: block;
+	margin-bottom: 18px;
+}
+#main_content
+{
+	font-family: Helvetica, Sans-Serif;
+	font-size: 13px;
+	color: #65686f;
+	line-height: 18px;
+}
+
+#friends_track
+{
+	font-family: Helvetica, Sans-Serif;
+	font-size: 13px;
+	color: #65686f;
+	line-height: 18px;
+	margin-top: 40px;
+	font-weight: bold;
+	display: none;
+}
+#friends_track a
+{
+	color: #6fbee7;
+	text-decoration: none;
+}
+</style>
+
+<script type="text/javascript">  
+$(document).ready(function(e) {
+	$("#friends_track").show();
+
+	$("#content_bs_1").show();
+	$(".bs_link_1 img").attr("src", "assets/images/icons/individual/icons_small_bs1_blue.png");
+	$(".bs_link_1").addClass("selected");
+	$(".bs_link_1").parents("li").addClass("selected");
+	
+	nav_count = 7;
+	
+	
+	$(".bs_link").on("click", function(e) {
+		e.preventDefault();
+		var selected = $(this).parent().attr("id");
+		selected = selected.replace(/_label/i, '');
+		selected = selected.replace(/_icon/i, '');
+		selected = selected.replace(/bs0/i, '');
+		
+		for (i = 1; i <= nav_count; i++)
+		{
+			if (i != selected)
+			{
+				$(".bs_link_"+i+" img").attr("src", "assets/images/icons/individual/icons_small_bs"+i+".png");
+				$(".bs_link_"+i).removeClass("selected");
+				$(".bs_link_"+i).parents("li").removeClass("selected");
+			}
+		}
+		
+		$(".bs_link_"+selected+" img").attr("src", "assets/images/icons/individual/icons_small_bs"+selected+"_blue.png");
+		$(".bs_link_"+selected).addClass("selected");
+		$(".bs_link_"+selected).parents("li").addClass("selected");
+		$(".bs_content").hide();
+		$("#content_bs_"+selected).show();
+		
+	});
+	
+	$.getJSON( "baby-steps.json", function( data ) {
+		var my_friends = [];
+		console.log(data);
+
+		$.each(data, function(k,v) {
+			console.log(v[0].firstName);
+		});
+		
+
+		
+	});
+});
+</script>
+</head>
+
+<body>
+	<div id="container">
+		<div id="shadow_left"></div>
+		<div id="content">
+			<header>
+				<div id="banner">
+					<div id="banner_text">
+						Real Life, Love and Money with
+						<div class="headline">America's Most<br>
+							Trusted Guy
+						</div>
+					</div>
+				</div>
+			</header>
+	
+			<nav>
+				<ul id="nav_baby_steps">
+					<li id="nav_bs01" class="selected">
+						<div id="bs01_icon" class="nav_icon"><a href="#" class="bs_link bs_link_1 selected"><img src="assets/images/icons/individual/icons_small_bs1_blue.png" alt="Baby Step 1"></a></div>
+						<div id="bs01_label" class="nav_label"><a href="#" class="bs_link bs_link_1 selected">Baby Step 1</a></div>
+						<div class="clearer"></div>
+					</li>
+					<li id="nav_bs02">
+						<div id="bs02_icon" class="nav_icon"><a href="#" class="bs_link bs_link_2"><img src="assets/images/icons/individual/icons_small_bs2.png" alt="Baby Step 2"></a></div>
+						<div id="bs02_label" class="nav_label"><a href="#" class="bs_link bs_link_2">Baby Step 2</a></div>
+						<div class="clearer"></div>
+					</li>
+					<li id="nav_bs03">
+						<div id="bs03_icon" class="nav_icon"><a href="#" class="bs_link bs_link_3"><img src="assets/images/icons/individual/icons_small_bs3.png" alt="Baby Step 3"></a></div>
+						<div id="bs03_label" class="nav_label"><a href="#" class="bs_link bs_link_3">Baby Step 3</a></div>
+						<div class="clearer"></div>
+					</li>
+					<li id="nav_bs04">
+						<div id="bs04_icon" class="nav_icon"><a href="#" class="bs_link bs_link_4"><img src="assets/images/icons/individual/icons_small_bs4.png" alt="Baby Step 4"></a></div>
+						<div id="bs04_label" class="nav_label"><a href="#" class="bs_link bs_link_4">Baby Step 4</a></div>
+						<div class="clearer"></div>
+					</li>
+					<li id="nav_bs05">
+						<div id="bs05_icon" class="nav_icon"><a href="#" class="bs_link bs_link_5"><img src="assets/images/icons/individual/icons_small_bs5.png" alt="Baby Step 5"></a></div>
+						<div id="bs05_label" class="nav_label"><a href="#" class="bs_link bs_link_5">Baby Step 5</a></div>
+						<div class="clearer"></div>
+					</li>
+					<li id="nav_bs06">
+						<div id="bs06_icon" class="nav_icon"><a href="#" class="bs_link bs_link_6"><img src="assets/images/icons/individual/icons_small_bs6.png" alt="Baby Step 6"></a></div>
+						<div id="bs06_label" class="nav_label"><a href="#" class="bs_link bs_link_6">Baby Step 6</a></div>
+						<div class="clearer"></div>
+					</li>
+					<li id="nav_bs07">
+						<div id="bs07_icon" class="nav_icon"><a href="#" class="bs_link bs_link_7"><img src="assets/images/icons/individual/icons_small_bs7.png" alt="Baby Step 7"></a></div>
+						<div id="bs07_label" class="nav_label"><a href="#" class="bs_link bs_link_7">Baby Step 7</a></div>
+						<div class="clearer"></div>
+					</li>
+				</ul>
+			</nav>
+			
+			<main>
+				<div id="main_content">
+					<div id="content_bs_1" class="bs_content">
+						<img src="assets/images/headings/heading_bs1.png" class="main_heading" alt="Baby Step 1: $1000 Emergency Fund">
+						An emergency fund is for those unexpected events in life that you can't plan for: the loss of a job, an unexpected pregnancy, a faulty car transmission, and the list goes on and on. It's not a matter of if these events will happen; it's simply a matter of when they will happen.<br>
+						<br>
+						This beginning emergency fund will keep life's little Murphies from turning into new debt while you work off the old debt. If a real emergency happens, you can handle it with your emergency fund. No more borrowing. It's time to break the cycle of debt!<br>
+					</div>
+					<div id="content_bs_2" class="bs_content">
+						<img src="assets/images/headings/heading_bs2.png" class="main_heading" alt="Baby Step 2: Pay off all debt using the Debt Snowball">
+						List your debts, excluding the house, in order. The smallest balance should be your number one priority. Don't worry about interest rates unless two debts have similar payoffs. If that's the case, then list the higher interest rate debt first.<br>
+						<br>
+						The point of the debt snowball is simply this: You need some quick wins in order to stay pumped up about getting out of debt! Paying off debt is not always about math. It's about motivation. Personal finance is 20% head knowledge and 80% behavior. When you start knocking off the easier debts, you will see results and you will stay motivated to dump your debt.<br>
+					</div>
+					<div id="content_bs_3" class="bs_content">
+						<img src="assets/images/headings/heading_bs3.png" class="main_heading" alt="Baby Step 3: 3 to 6 months of exepenses in savings">
+						Once you complete the first two baby steps, you will have built serious momentum. But don't start throwing all your “extra” money into investments quite yet. It's time to build your full emergency fund. Ask yourself, “What would it take for me to live for three to six months if I lost my income?” Your answer to that question is how much you should save.<br>
+						<br>
+						Use this money for emergencies only: incidents that would have a major impact on you and your family. Keep these savings in a money market account. Remember, this stash of money is not an investment; it is insurance you're paying to yourself, a buffer between you and life.<br>
+					</div>
+					<div id="content_bs_4" class="bs_content">
+						<img src="assets/images/headings/heading_bs4.png" class="main_heading" alt="Baby Step 4: Invest 15% of household income for retirement">
+						When you reach this step, you'll have no payments—except the house—and a fully funded emergency fund. Now it's time to get serious about building wealth.<br>
+						<br>
+						Dave suggests investing 15% of your household income into Roth IRAs and pre-tax retirement plans. Don't invest more than that because the extra money will help you complete the next two steps: college savings and paying off your home early.<br>
+					</div>
+					<div id="content_bs_5" class="bs_content">
+						<img src="assets/images/headings/heading_bs5.png" class="main_heading" alt="Baby Step 5: College funding for children">
+						By this point, you should have already started Baby Step 4—investing 15% of your income—before saving for college. Whether you are saving for you or your child to go to college, you need to start now.<br>
+						<br>
+						In order to have enough money saved for college, you need to have a goal. Determine how much per month you should be saving at 12% interest in order to have enough for college. If you save at 12% and inflation is at 4%, then you are moving ahead of inflation at a net of 8% per year!<br>
+					</div>
+					<div id="content_bs_6" class="bs_content">
+						<img src="assets/images/headings/heading_bs6.png" class="main_heading" alt="Baby Step 6: Pay off your house early">
+						Now it's time to begin chunking all of your extra money toward the mortgage. You are getting closer to realizing the dream of a life with no house payments.<br>
+						<br>
+						As you attack this last debt, you will gain momentum much like you did back in the second step of the debt snowball. Remember, having absolutely no payments is totally within your reach!<br>
+					</div>
+					<div id="content_bs_7" class="bs_content">
+						<img src="assets/images/headings/heading_bs7.png" class="main_heading" alt="Baby Step 7: Build wealth and give!">
+						It's time to build wealth and give like never before. Leave an inheritance for future generations, and bless others now with your excess. It's really the only way to live!<br>
+						<br>
+						Golda Meir says, “You can't shake hands with a clenched fist.” Vow to never hold your money so tightly that you never give any away. Hoarding money is not the way to wealth. Save for yourself, save for your family's future, and be gracious enough to bless others. You can do all three at the same time.<br>
+					</div>
+				</div>
+
+				<div id="friends_track">
+					<a href="#">Kathleen Baker, Ryan Larsen</a> and 4 Other Friends are on this step
+				</div>
+				
+			</main>
+			<div class="clearer"></div>
+			
+		</div><!-- end content -->
+		<div id="shadow_right"></div>
+		<div class="clearer"></div>
+		<div id="shadow_bottom"></div>
+	</div><!-- end container -->
+</body>
+</html>
